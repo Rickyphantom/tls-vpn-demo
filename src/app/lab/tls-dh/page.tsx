@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // 간단한 모듈러 거듭제곱(BigInt)
 function powmod(base: bigint, exp: bigint, mod: bigint): bigint {
@@ -14,6 +15,171 @@ function powmod(base: bigint, exp: bigint, mod: bigint): bigint {
   }
   return result;
 }
+
+// 단계별 SVG 시각화 및 애니메이션
+const StepAnimation = ({
+  step,
+  clientShared,
+  serverShared,
+}: {
+  step: number;
+  clientShared: bigint | null;
+  serverShared: bigint | null;
+}) => {
+  // 색상 정의
+  const clientColor = '#6c63ff';
+  const serverColor = '#ff6584';
+  const keyColor = '#f8d90f';
+  const sharedColor = clientShared && serverShared && clientShared === serverShared ? '#7ed957' : '#f8d90f';
+
+  return (
+    <svg width="360" height="120" style={{ marginBottom: 10 }}>
+      {/* Client */}
+      <motion.circle
+        cx={70}
+        cy={60}
+        r={30}
+        fill={clientColor}
+        initial={{ scale: 0.7, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ type: 'spring', delay: 0.1 }}
+      />
+      <text x={70} y={66} textAnchor="middle" fill="#fff" fontSize="20" fontWeight={700}>Client</text>
+
+      {/* Server */}
+      <motion.circle
+        cx={290}
+        cy={60}
+        r={30}
+        fill={serverColor}
+        initial={{ scale: 0.7, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ type: 'spring', delay: 0.1 }}
+      />
+      <text x={290} y={66} textAnchor="middle" fill="#fff" fontSize="20" fontWeight={700}>Server</text>
+
+      {/* 단계별 애니메이션 */}
+      <AnimatePresence>
+        {step === 0 && (
+          <motion.rect
+            x={110} y={40} width={60} height={40} rx={10}
+            fill="#f8d90f"
+            initial={{ opacity: 0, x: -40 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 40 }}
+            transition={{ duration: 0.6 }}
+          />
+        )}
+        {step === 0 && (
+          <motion.text
+            x={140} y={66} textAnchor="middle" fill="#333" fontSize="15"
+            initial={{ opacity: 0, x: -40 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 40 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >암호화 목록</motion.text>
+        )}
+
+        {step === 1 && (
+          <motion.rect
+            x={190} y={40} width={60} height={40} rx={10}
+            fill="#b2f7ef"
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -40 }}
+            transition={{ duration: 0.6 }}
+          />
+        )}
+        {step === 1 && (
+          <motion.text
+            x={220} y={66} textAnchor="middle" fill="#333" fontSize="15"
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -40 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >인증서</motion.text>
+        )}
+
+        {step === 2 && (
+          <>
+            {/* Client → Server 화살표 (A) */}
+            <motion.line
+              x1={100} y1={60} x2={260} y2={60}
+              stroke={clientColor} strokeWidth={5}
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{ duration: 0.8 }}
+              markerEnd="url(#arrowheadA)"
+            />
+            <motion.circle
+              cx={180} cy={60} r={18}
+              fill={keyColor}
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            />
+            <motion.text
+              x={180} y={66} textAnchor="middle" fill="#333" fontSize="18" fontWeight={700}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.1 }}
+            >A</motion.text>
+            <defs>
+              <marker id="arrowheadA" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill={clientColor} />
+              </marker>
+            </defs>
+          </>
+        )}
+
+        {step >= 3 && (
+          <>
+            {/* 양방향 화살표 (공개키 교환) */}
+            <motion.line
+              x1={100} y1={40} x2={260} y2={40}
+              stroke={clientColor} strokeWidth={3}
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{ duration: 0.7 }}
+              markerEnd="url(#arrowheadA)"
+            />
+            <motion.line
+              x1={260} y1={80} x2={100} y2={80}
+              stroke={serverColor} strokeWidth={3}
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              markerEnd="url(#arrowheadB)"
+            />
+            {/* 공유키 */}
+            <motion.circle
+              cx={180} cy={60} r={22}
+              fill={sharedColor}
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: 'spring', delay: 0.6 }}
+              style={{ filter: clientShared && serverShared && clientShared === serverShared ? 'drop-shadow(0 0 8px #7ed957)' : undefined }}
+            />
+            <motion.text
+              x={180} y={66} textAnchor="middle" fill="#333" fontSize="20" fontWeight={700}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.1 }}
+            >S</motion.text>
+            <defs>
+              <marker id="arrowheadB" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill={serverColor} />
+              </marker>
+              <marker id="arrowheadA" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill={clientColor} />
+              </marker>
+            </defs>
+          </>
+        )}
+      </AnimatePresence>
+    </svg>
+  );
+};
 
 export default function FixedDHDynamic() {
   // 고정 파라미터
@@ -43,7 +209,7 @@ export default function FixedDHDynamic() {
     setClientPublicA(A);
     setClientShared(null);
     setServerShared(null);
-    setStep(2); // 3단계로 자동 이동
+    setStep(3); // 4단계로 자동 이동
   }
 
   // Pre-Master Secret 계산
@@ -53,7 +219,7 @@ export default function FixedDHDynamic() {
       const serverS = powmod(clientPublicA, serverSecretB, p);
       setClientShared(clientS);
       setServerShared(serverS);
-      setStep(3); // 4단계로 자동 이동
+      setStep(4); // 5단계로 자동 이동
     }
   }
 
@@ -67,25 +233,51 @@ export default function FixedDHDynamic() {
   ];
 
   return (
-    <div style={{ maxWidth: 700, margin: 'auto', fontFamily: 'sans-serif', border: '1px solid #ddd', borderRadius: 8, padding: '2rem' }}>
+    <div style={{
+      maxWidth: 750,
+      margin: 'auto',
+      fontFamily: 'sans-serif',
+      border: '1px solid #ddd',
+      borderRadius: 12,
+      padding: '2.2rem',
+      background: '#fafdff',
+      boxShadow: '0 2px 24px #b2f7ef33'
+    }}>
       <h2 style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
         🔐 TLS with Fixed Diffie-Hellman 동적 시뮬레이션
       </h2>
 
-      <div style={{
-        minHeight: 100,
-        backgroundColor: '#f8f9fa',
-        border: '1px solid #dee2e6',
-        borderRadius: 6,
-        padding: '1.5rem',
-        textAlign: 'center',
-        marginBottom: '1.5rem',
-        fontSize: '1.1rem',
-        lineHeight: 1.6,
-      }}>
-        <b>[{step + 1}단계]</b> {steps[step]}
+      {/* 단계별 애니메이션 */}
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
+        <StepAnimation
+          step={step}
+          clientShared={clientShared}
+          serverShared={serverShared}
+        />
       </div>
 
+      {/* 단계별 설명 */}
+      <motion.div
+        style={{
+          minHeight: 100,
+          backgroundColor: '#f8f9fa',
+          border: '1px solid #dee2e6',
+          borderRadius: 8,
+          padding: '1.5rem',
+          textAlign: 'center',
+          marginBottom: '1.5rem',
+          fontSize: '1.1rem',
+          lineHeight: 1.6,
+        }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        key={step}
+      >
+        <b>[{step + 1}단계]</b> {steps[step]}
+      </motion.div>
+
+      {/* 파라미터 및 키 정보 */}
       <div style={{ marginBottom: 24 }}>
         <div style={{ marginBottom: 8 }}>
           <b>공통 파라미터</b> <br />
@@ -105,6 +297,7 @@ export default function FixedDHDynamic() {
         </div>
       </div>
 
+      {/* 단계별 버튼 */}
       <div style={{ display: 'flex', gap: 8, marginBottom: 24 }}>
         <button
           onClick={() => setStep((prev) => Math.max(prev - 1, 0))}
@@ -134,8 +327,20 @@ export default function FixedDHDynamic() {
         </button>
       </div>
 
+      {/* 결과 표시 */}
       {step >= 3 && (
-        <div style={{ background: '#f4f4f4', borderRadius: 6, padding: 16, marginTop: 12 }}>
+        <motion.div
+          style={{
+            background: '#f4f4f4',
+            borderRadius: 8,
+            padding: 18,
+            marginTop: 12,
+            boxShadow: '0 0 10px #7ed95744'
+          }}
+          initial={{ opacity: 0, scale: 0.97 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4 }}
+        >
           <div>
             <b>클라이언트 계산 (S = B^a mod p):</b> {clientShared !== null ? clientShared.toString() : '-'}
           </div>
@@ -149,7 +354,7 @@ export default function FixedDHDynamic() {
                 : '❌ 오류! 대칭키가 다릅니다.'}
             </div>
           )}
-        </div>
+        </motion.div>
       )}
     </div>
   );
