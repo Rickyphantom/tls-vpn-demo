@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 const steps = [
   {
@@ -83,7 +84,15 @@ const steps = [
       </>
     ),
   },
+];
 
+// 단계별 이미지 파일명 (public 폴더에 넣으세요)
+const stepImages = [
+  '/tls-ecdhe1.png',
+  '/tls-ecdhe2.png',
+  '/tls-ecdhe3.png',
+  '/tls-ecdhe4.png',
+  '/tls-ecdhe5.png',
 ];
 
 export default function TLSECDHE() {
@@ -155,6 +164,17 @@ export default function TLSECDHE() {
               <div className="text-xl font-bold text-orange-300">{steps[step].title}</div>
               <div className="text-base text-gray-300">{steps[step].subtitle}</div>
             </div>
+          </div>
+          {/* 단계별 이미지 표시 */}
+          <div className="w-full flex justify-center mb-6">
+            <Image
+              src={stepImages[step]}
+              alt={`ECDHE Step ${step + 1}`}
+              width={700}
+              height={350}
+              className="rounded-lg border border-gray-700 bg-white"
+              style={{ maxWidth: '100%', height: 'auto' }}
+            />
           </div>
           <div className="w-full text-gray-100 text-base mb-4">{steps[step].detail}</div>
           <div className="flex gap-3 mt-4">
