@@ -83,26 +83,7 @@ const steps = [
       </>
     ),
   },
-  {
-    title: '6. ECDHE의 장단점',
-    subtitle: 'ECDHE 방식의 주요 장점과 단점',
-    detail: (
-      <>
-        <div className="w-full">
-          <h3 className="text-lg font-bold text-orange-300 mb-2">ECDHE의 장단점</h3>
-          <ul className="list-disc pl-5 mb-2">
-            <li className="mb-1"><b className="text-green-400">장점:</b> Perfect Forward Secrecy(PFS) 제공 – 세션키가 노출되어도 과거 통신은 안전</li>
-            <li className="mb-1">임시 키쌍 사용으로 보안성이 높음</li>
-            <li className="mb-1">RSA 등 기존 방식보다 최신 TLS 표준에서 권장</li>
-          </ul>
-          <ul className="list-disc pl-5">
-            <li className="mb-1"><b className="text-red-400">단점:</b> 구현이 복잡하고, 계산 비용이 약간 더 높음</li>
-            <li>서버/클라이언트 모두 임시 키쌍을 생성해야 함</li>
-          </ul>
-        </div>
-      </>
-    ),
-  },
+
 ];
 
 export default function TLSECDHE() {
