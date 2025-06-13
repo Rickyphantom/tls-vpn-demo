@@ -1,26 +1,27 @@
-"use client";
+'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 const steps = [
   {
     title: '1. ClientHello',
-    subtitle: '클라이언트가 mTLS 지원을 알리고 랜덤값을 보냅니다.',
+    subtitle: '클라이언트가 지원 암호스위트와 랜덤값을 서버에 보냅니다.',
     detail: (
       <>
         <div>
-          <b className="text-orange-400">암호 스위트:</b> mTLS, AES, ...<br />
+          <b className="text-orange-400">암호 스위트:</b> ECDHE, RSA, ...<br />
           <b className="text-green-300">ClientRandom:</b> 0xA1B2C3...
         </div>
         <div className="mt-2 text-xs text-gray-400">
-          클라이언트는 mTLS를 지원하는 암호 스위트와 랜덤값을 서버에 보냅니다.
+          클라이언트는 지원하는 암호스위트와 랜덤값을 서버에 보냅니다.
         </div>
       </>
     ),
   },
   {
-    title: '2. ServerHello + CertificateRequest + Certificate',
-    subtitle: '서버가 인증서와 클라이언트 인증서 요청, 랜덤값을 보냅니다.',
+    title: '2. ServerHello + Certificate + CertificateRequest',
+    subtitle: '서버가 인증서와 클라이언트 인증서 요청 메시지를 보냅니다.',
     detail: (
       <>
         <div>
@@ -29,40 +30,40 @@ const steps = [
           <b className="text-blue-300">CertificateRequest:</b> 클라이언트 인증서 요청
         </div>
         <div className="mt-2 text-xs text-gray-400">
-          서버는 인증서와 함께 클라이언트에게 인증서를 요청합니다.<br />
-          인증서로 서버의 신원을 검증할 수 있습니다.
+          서버는 자신의 인증서와 함께 클라이언트에게 인증서를 요청합니다.<br />
+          mTLS에서는 서버와 클라이언트 모두 인증서를 사용해 신원을 검증합니다.
         </div>
       </>
     ),
   },
   {
     title: '3. Client Certificate + ClientKeyExchange',
-    subtitle: '클라이언트가 자신의 인증서와 키 교환 메시지를 보냅니다.',
+    subtitle: '클라이언트가 자신의 인증서와 키 교환 메시지를 서버에 보냅니다.',
     detail: (
       <>
         <div>
           <b className="text-orange-400">클라이언트 인증서:</b> (공개키 포함)<br />
-          <b className="text-blue-300">ClientKeyExchange:</b> Pre-Master Secret 전송
+          <b className="text-blue-300">ClientKeyExchange:</b> pre-master secret 등
         </div>
         <div className="mt-2 text-xs text-gray-400">
           클라이언트는 자신의 인증서와 키 교환 메시지를 서버에 보냅니다.<br />
-          서버는 클라이언트 인증서로 신원을 검증합니다.
+          서버는 클라이언트 인증서의 유효성을 검증합니다.
         </div>
       </>
     ),
   },
   {
-    title: '4. 인증서 검증 및 Pre-Master Secret 계산',
-    subtitle: '서버와 클라이언트가 서로의 인증서를 검증하고 Pre-Master Secret을 계산합니다.',
+    title: '4. 인증서 검증 및 세션키 생성',
+    subtitle: '서버와 클라이언트가 서로의 인증서를 검증하고 세션키를 생성합니다.',
     detail: (
       <>
         <div>
           <b className="text-pink-300">서버:</b> 클라이언트 인증서 검증<br />
           <b className="text-pink-300">클라이언트:</b> 서버 인증서 검증<br />
-          <b className="text-yellow-300">Pre-Master Secret:</b> 0x8F2A...
+          <b className="text-yellow-300">공유 비밀값:</b> pre-master secret
         </div>
         <div className="mt-2 text-xs text-gray-400">
-          양쪽 모두 상대방의 인증서를 검증하고, Pre-Master Secret을 계산합니다.
+          양쪽 모두 상대방 인증서를 검증하고, 세션키를 생성합니다.
         </div>
       </>
     ),
@@ -78,14 +79,22 @@ const steps = [
         </div>
         <div className="mt-2 text-xs text-gray-400">
           이제부터는 대칭키로 안전하게 데이터를 주고받습니다.<br />
-          양방향 인증으로 보안성이 더욱 강화됩니다.
+          mTLS에서는 양쪽 모두 신원이 검증된 상태입니다.
         </div>
       </>
     ),
   },
 ];
 
-export default function TLSmTLS() {
+const stepImages = [
+  '/tls-mtls1.png',
+  '/tls-mtls2.png',
+  '/tls-mtls3.png',
+  '/tls-mtls4.png',
+  '/tls-mtls5.png',
+];
+
+export default function TLSMTLS() {
   const [step, setStep] = useState(0);
 
   return (
@@ -154,6 +163,17 @@ export default function TLSmTLS() {
               <div className="text-xl font-bold text-orange-300">{steps[step].title}</div>
               <div className="text-base text-gray-300">{steps[step].subtitle}</div>
             </div>
+          </div>
+          {/* 단계별 이미지 표시 */}
+          <div className="w-full flex justify-center mb-6">
+            <Image
+              src={stepImages[step]}
+              alt={`mTLS Step ${step + 1}`}
+              width={700}
+              height={350}
+              className="rounded-lg border border-gray-700 bg-white"
+              style={{ maxWidth: '100%', height: 'auto' }}
+            />
           </div>
           <div className="w-full text-gray-100 text-base mb-4">{steps[step].detail}</div>
           <div className="flex gap-3 mt-4">
