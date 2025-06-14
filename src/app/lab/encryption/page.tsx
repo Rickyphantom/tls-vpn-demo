@@ -9,9 +9,6 @@ export default function EncryptionMenuPage() {
           🔐 <Link href="/lab/encryption/tls-rsa">RSA 실습</Link>
         </li>
         <li>
-          📡 <Link href="/lab/encryption/tls-dh">DH 실습</Link>
-        </li>
-        <li>
           🧬 <Link href="/lab/encryption/tls-ecdhe">ECDHE 실습</Link>
         </li>
         <li>
