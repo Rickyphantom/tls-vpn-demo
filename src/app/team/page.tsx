@@ -2,8 +2,16 @@
 
 import Image from 'next/image';
 
+interface TeamMember {
+  name: string;
+  id: string;
+  role: string;
+  task: string;
+  img: string;
+}
+
 export default function TeamPage() {
-  const leader = {
+  const leader: TeamMember = {
     name: '유선빈',
     id: '92113724',
     role: '팀장',
@@ -11,7 +19,7 @@ export default function TeamPage() {
     img: 'man.png',
   };
 
-  const members = [
+  const members: TeamMember[] = [
     {
       name: '권도윤',
       id: '92113451',
@@ -44,15 +52,15 @@ export default function TeamPage() {
 
   return (
     <div className="min-h-screen bg-[#0e0f1a] text-white px-6 py-14 flex flex-col items-center">
-      <h1 className="text-3xl font-bold text-center mb-12">👨‍👩‍👦‍👦 팀원 소개</h1>
+      <h1 className="text-3xl font-bold text-center mb-12">팀원 소개</h1>
 
       {/* 팀장 */}
       <div className="flex flex-col items-center mb-10">
         <ProfileCard member={leader} />
-        <div className="w-1 h-6 bg-white mt-2" /> {/* 선 */}
+        <div className="w-1 h-6 bg-white mt-2" />
       </div>
 
-      {/* 팀원 */}
+      {/* 조원 */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         {members.map((member, index) => (
           <ProfileCard key={index} member={member} />
@@ -62,7 +70,7 @@ export default function TeamPage() {
   );
 }
 
-function ProfileCard({ member }: { member: any }) {
+function ProfileCard({ member }: { member: TeamMember }) {
   return (
     <div className="bg-[#1a1b2e] rounded-2xl p-6 shadow-lg flex flex-col items-center text-center hover:scale-105 transition w-48">
       <div className="relative w-24 h-24 mb-4 rounded-full overflow-hidden">
