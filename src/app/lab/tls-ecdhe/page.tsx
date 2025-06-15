@@ -106,14 +106,14 @@ export default function TLSECDHE() {
     >
       <div className="w-full max-w-3xl rounded-3xl shadow-2xl border border-gray-700 overflow-hidden"
         style={{
-          background: 'rgba(30,32,34,0.95)',
+          background: 'rgba(255, 255, 255, 0.95)'',
           boxShadow: '0 8px 40px #000a, 0 1.5px 0 #fff1 inset'
         }}
       >
         {/* 헤더 */}
         <div className="py-7 px-8 text-center border-b border-gray-800"
           style={{
-            background: 'linear-gradient(90deg, #232526 60%, #fbbf24 100%)',
+            background: 'linear-gradient(90deg, rgb(150, 150, 150) 60%, #fbbf24 100%)',
           }}
         >
           <h2 className="text-3xl font-extrabold text-white drop-shadow mb-2 tracking-tight">
