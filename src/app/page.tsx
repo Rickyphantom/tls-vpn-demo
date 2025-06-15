@@ -21,6 +21,10 @@ export default function HomePage() {
         <li>
           🔐 <Link href="/lab/encryption">암호화 실습</Link>
         </li>
+        <li>
+<Link href="/team">팀원소개</Link>
+</li>
+
       </ul>
     </div>
   );
