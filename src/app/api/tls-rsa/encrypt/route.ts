@@ -1,14 +1,9 @@
-// app/api/tls-rsa/encrypt
-
+// app/api/tls-rsa/encrypt/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import * as forge from 'node-forge';
+import { rsaEncrypt } from '@/lib/forge-utils';
 
 export async function POST(req: NextRequest) {
   const { publicKeyPem, plaintext } = await req.json();
-  const publicKey = forge.pki.publicKeyFromPem(publicKeyPem);
-  const encrypted = publicKey.encrypt(
-    forge.util.encodeUtf8(plaintext),
-    'RSA-OAEP'
-  );
-  return NextResponse.json({ encrypted: forge.util.encode64(encrypted) });
+  const encrypted = rsaEncrypt(publicKeyPem, plaintext);
+  return NextResponse.json({ encrypted });
 }
