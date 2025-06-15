@@ -1,6 +1,9 @@
-'use client'
+'use client';
 
-import Image from 'next/image';
+import { Card, Typography, Avatar, Row, Col, } from 'antd';
+
+
+const { Title, Text, Paragraph } = Typography;
 
 interface TeamMember {
   name: string;
@@ -15,7 +18,7 @@ export default function TeamPage() {
     name: '유선빈',
     id: '92113724',
     role: '팀장',
-    task: 'Github 프로젝트 생성 및 틀 제작',
+    task: '프로젝트 틀 및 사이트 디자인, 분량 분배, 마감',
     img: 'man.png',
   };
 
@@ -29,7 +32,7 @@ export default function TeamPage() {
     },
     {
       name: '박성준',
-      id: '00000000',
+      id: '91913440',
       role: '조원',
       task: 'TLS-handshake 페이지 담당',
       img: 'man.png',
@@ -51,40 +54,57 @@ export default function TeamPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0e0f1a] text-white px-6 py-14 flex flex-col items-center">
-      <h1 className="text-3xl font-bold text-center mb-12">팀원 소개</h1>
+    <div style={{ backgroundColor: '#141414', minHeight: '100vh', padding: '64px 24px' }}>
+      <Title level={2} style={{ textAlign: 'center', color: 'white', marginBottom: 40 }}>
+        팀원 소개
+      </Title>
 
       {/* 팀장 */}
-      <div className="flex flex-col items-center mb-10">
-        <ProfileCard member={leader} />
-        <div className="w-1 h-6 bg-white mt-2" />
-      </div>
+      <Row justify="center" style={{ marginBottom: 64 }}>
+        <Col>
+          <ProfileCard member={leader} isLeader />
+        </Col>
+      </Row>
 
       {/* 조원 */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-        {members.map((member, index) => (
-          <ProfileCard key={index} member={member} />
+      <Row gutter={[24, 24]} justify="center">
+        {members.map((member, idx) => (
+          <Col xs={24} sm={12} md={8} lg={6} key={idx}>
+            <ProfileCard member={member} />
+          </Col>
         ))}
-      </div>
+      </Row>
     </div>
   );
 }
 
-function ProfileCard({ member }: { member: TeamMember }) {
+function ProfileCard({ member, isLeader = false }: { member: TeamMember; isLeader?: boolean }) {
   return (
-    <div className="bg-[#1a1b2e] rounded-2xl p-6 shadow-lg flex flex-col items-center text-center hover:scale-105 transition w-48">
-      <div className="relative w-24 h-24 mb-4 rounded-full overflow-hidden">
-        <Image
-          src={`/team/${member.img || 'man.png'}`}
-          alt={`${member.name}의 프로필`}
-          fill
-          className="object-cover rounded-full border border-gray-300"
-        />
-      </div>
-      <h2 className="text-lg font-semibold">{member.name}</h2>
-      <p className="text-sm text-gray-400">{member.id}</p>
-      <p className="text-sm text-[#c7bfff] font-medium mt-2">{member.role}</p>
-      <p className="text-xs text-gray-400 mt-1">{member.task}</p>
-    </div>
+    <Card
+      hoverable
+      style={{
+        backgroundColor: '#1f1f1f',
+        color: 'white',
+        borderRadius: 16,
+        textAlign: 'center',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+        transform: isLeader ? 'scale(1.05)' : 'none',
+      }}
+      bodyStyle={{ padding: 24 }}
+    >
+      <Avatar
+        size={96}
+        src={`/team/${member.img}`}
+        style={{ marginBottom: 16, border: '2px solid #aaa' }}
+      />
+      <Title level={4} style={{ color: '#fff', margin: 0 }}>
+        {member.name}
+      </Title>
+      <Text style={{ display: 'block', color: '#999', marginBottom: 4 }}>{member.id}</Text>
+      <Text strong style={{ color: '#c7bfff' }}>
+        {member.role}
+      </Text>
+      <Paragraph style={{ color: '#bbb', marginTop: 12, fontSize: 13 }}>{member.task}</Paragraph>
+    </Card>
   );
 }
