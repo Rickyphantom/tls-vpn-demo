@@ -78,11 +78,11 @@ export default function TLSClientMTLSPage() {
           💻 <strong>클라이언트 공개키</strong>: <span className="break-all">{shortKey(clientPub)}</span>
         </div>
         <div className="mb-2">
-          <span className="mr-2">🔑 <strong>서버 CA 서명 검증</strong>:</span>
+          <span className="mr-2">🔑 <strong>서버 인증서의 CA 서명 검증</strong>:</span>
           <span className={serverVerified === "성공" ? "text-green-600" : "text-red-600"}>{serverVerified ?? "-"}</span>
         </div>
         <div>
-          <span className="mr-2">🔑 <strong>클라이언트 CA 서명 검증</strong>:</span>
+          <span className="mr-2">🔑 <strong>클라이언트 인증서의 CA 서명 검증</strong>:</span>
           <span className={clientVerified === "성공" ? "text-green-600" : "text-red-600"}>{clientVerified ?? "-"}</span>
         </div>
       </div>
