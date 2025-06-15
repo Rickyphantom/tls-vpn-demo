@@ -187,7 +187,8 @@ export default function TLSHandshakePage() {
         <img
           src="/tls-ssl-handshake.png"
           alt="TLS Handshake 흐름도 (TCP + TLS)"
-          className="w-full rounded-lg shadow-lg border border-gray-700"
+          style={{ width: '50%', height: 'auto', display: 'block' }}
+          className="rounded-lg shadow-lg border border-gray-700"
         />
         <p className="text-center text-gray-400 mt-2 text-sm">
           ▲ TLS 연결 수립 시 실제 TCP + TLS 교환 흐름
