@@ -106,7 +106,7 @@ export default function TLSECDHE() {
     >
       <div className="w-full max-w-3xl rounded-3xl shadow-2xl border border-gray-700 overflow-hidden"
         style={{
-          background: 'rgba(255, 255, 255, 0.95)'',
+          background: 'rgba(255, 255, 255, 0.95)',
           boxShadow: '0 8px 40px #000a, 0 1.5px 0 #fff1 inset'
         }}
       >
