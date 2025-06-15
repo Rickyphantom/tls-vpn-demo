@@ -53,7 +53,7 @@ export default function TLSClientMTLSPage() {
   };
 
   function shortKey(key: string) {
-    return key ? key.slice(0, 40) + "..." : "";
+    return key ? '...' + key.slice(-40) : '';
   }
 
   return (
