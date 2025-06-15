@@ -5,7 +5,6 @@ const menuItems = [
   { label: 'RSA 실습', href: '/lab/encryption/tls-rsa', icon: '🔐' },
   { label: 'DH 실습', href: '/lab/encryption/tls-dh', icon: '🔐' },
   { label: 'ECDHE 실습', href: '/lab/encryption/tls-ecdhe', icon: '🧬' },
-  { label: 'TLS Handshake 보기', href: '/lab/encryption/tls-handshake', icon: '🤝' },
   { label: 'mTLS 실습', href: '/lab/encryption/tls-mtls', icon: '🛂' },
 ];
 
