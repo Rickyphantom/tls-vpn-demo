@@ -1,7 +1,6 @@
 'use client';
 
-import { Card, Typography, Avatar, Row, Col, } from 'antd';
-
+import { Card, Typography, Avatar, Row, Col } from 'antd';
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -18,7 +17,7 @@ export default function TeamPage() {
     name: '유선빈',
     id: '92113724',
     role: '팀장',
-    task: '프로젝트 틀 및 사이트 디자인, 분량 분배, 마감',
+    task: '프로젝트 틀 및 사이트 디자인',
     img: 'man.png',
   };
 
@@ -54,8 +53,17 @@ export default function TeamPage() {
   ];
 
   return (
-    <div style={{ backgroundColor: '#141414', minHeight: '100vh', padding: '64px 24px' }}>
-      <Title level={2} style={{ textAlign: 'center', color: 'white', marginBottom: 40 }}>
+    <div
+      style={{
+        backgroundColor: '#f5f7fa',
+        minHeight: '100vh',
+        padding: '64px 24px',
+      }}
+    >
+      <Title
+        level={2}
+        style={{ textAlign: 'center', color: '#1d1d1f', marginBottom: 40 }}
+      >
         팀원 소개
       </Title>
 
@@ -78,16 +86,22 @@ export default function TeamPage() {
   );
 }
 
-function ProfileCard({ member, isLeader = false }: { member: TeamMember; isLeader?: boolean }) {
+function ProfileCard({
+  member,
+  isLeader = false,
+}: {
+  member: TeamMember;
+  isLeader?: boolean;
+}) {
   return (
     <Card
       hoverable
       style={{
-        backgroundColor: '#1f1f1f',
-        color: 'white',
+        backgroundColor: '#ffffff',
+        color: '#1d1d1f',
         borderRadius: 16,
         textAlign: 'center',
-        boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
         transform: isLeader ? 'scale(1.05)' : 'none',
       }}
       bodyStyle={{ padding: 24 }}
@@ -95,16 +109,20 @@ function ProfileCard({ member, isLeader = false }: { member: TeamMember; isLeade
       <Avatar
         size={96}
         src={`/team/${member.img}`}
-        style={{ marginBottom: 16, border: '2px solid #aaa' }}
+        style={{ marginBottom: 16, border: '2px solid #ccc' }}
       />
-      <Title level={4} style={{ color: '#fff', margin: 0 }}>
+      <Title level={4} style={{ color: '#1d1d1f', margin: 0 }}>
         {member.name}
       </Title>
-      <Text style={{ display: 'block', color: '#999', marginBottom: 4 }}>{member.id}</Text>
-      <Text strong style={{ color: '#c7bfff' }}>
+      <Text style={{ display: 'block', color: '#888', marginBottom: 4 }}>
+        {member.id}
+      </Text>
+      <Text strong style={{ color: '#6633cc' }}>
         {member.role}
       </Text>
-      <Paragraph style={{ color: '#bbb', marginTop: 12, fontSize: 13 }}>{member.task}</Paragraph>
+      <Paragraph style={{ color: '#555', marginTop: 12, fontSize: 13 }}>
+        {member.task}
+      </Paragraph>
     </Card>
   );
 }

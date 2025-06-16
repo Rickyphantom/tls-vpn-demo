@@ -16,7 +16,8 @@ const features = [
     emoji: '🧪',
     title: 'TLS Handshake 시뮬레이션',
     href: '/lab/tls-handshake',
-    description: 'TLS 연결 과정(Hello → Key Exchange)을 시각적으로 체험해보세요.',
+    description:
+      'TLS 연결 과정(Hello → Key Exchange)을 시각적으로 체험해보세요.',
   },
   {
     emoji: '🔐',
@@ -34,33 +35,53 @@ const features = [
 
 export default function HomePage() {
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#141414', padding: '64px 24px' }}>
-      <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center', color: '#fff' }}>
-        <Title level={2} style={{ color: '#fff' }}>
+    <div
+      style={{
+        minHeight: '100vh',
+        backgroundColor: '#f5f7fa',
+        padding: '64px 24px',
+      }}
+    >
+      <div
+        style={{
+          maxWidth: 800,
+          margin: '0 auto',
+          textAlign: 'center',
+          color: '#1d1d1f',
+        }}
+      >
+        <Title level={2} style={{ color: '#1d1d1f' }}>
           📘 TLS 기반 VPN 실습 웹사이트
         </Title>
-        <Paragraph style={{ color: '#aaa' }}>
-          TLS 암호화와 VPN 구조를 시각적으로 학습할 수 있도록 만든 교육용 플랫폼입니다.
+        <Paragraph style={{ color: '#555' }}>
+          TLS 암호화와 VPN 구조를 시각적으로 학습할 수 있도록 만든 교육용
+          플랫폼입니다.
         </Paragraph>
       </div>
 
-      <Row gutter={[24, 24]} justify="center" style={{ maxWidth: 1000, margin: '48px auto 0' }}>
+      <Row
+        gutter={[24, 24]}
+        justify="center"
+        style={{ maxWidth: 1000, margin: '48px auto 0' }}
+      >
         {features.map((item, idx) => (
           <Col key={idx} xs={24} sm={12} md={12} lg={12}>
             <Card
               hoverable
               style={{
-                backgroundColor: '#1f1f1f',
-                color: '#fff',
+                backgroundColor: '#ffffff',
+                color: '#1d1d1f',
                 borderRadius: 12,
                 height: '100%',
               }}
               bodyStyle={{ padding: 24 }}
             >
-              <Title level={4} style={{ color: '#fff', marginBottom: 12 }}>
+              <Title level={4} style={{ color: '#1d1d1f', marginBottom: 12 }}>
                 {item.emoji} {item.title}
               </Title>
-              <Text style={{ color: '#bbb', display: 'block', marginBottom: 20 }}>
+              <Text
+                style={{ color: '#666', display: 'block', marginBottom: 20 }}
+              >
                 {item.description}
               </Text>
               <Link href={item.href} passHref>
