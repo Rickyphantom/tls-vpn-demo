@@ -69,10 +69,6 @@ export default function TLSRSAClientPage() {
     };
   }
 
-  useEffect(() => {
-    fetchCert();
-  }, []);
-
   return (
     <div className="p-6 max-w-screen-md mx-auto">
       <h1 className="text-2xl font-bold mb-4">🔐 TLS-like RSA Playground</h1>
